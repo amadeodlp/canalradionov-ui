@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "declaration": true, // Generates .d.ts files
+    "emitDeclarationOnly": true, // Only generate .d.ts files, not JS
+    "outDir": "./dist",
+    "rootDir": "./",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@assets/*": ["./app/assets/*"],
+      "@components/*": ["./app/components/*"],
+      "@utils/*": ["./app/utils/*"],
+      "@redux/*": ["./app/redux/*"],
+      "@hooks": ["./app/hooks/hooks.ts"],
+    },
+    "typeRoots": ["./node_modules/@types", "./app/global.d.ts"]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "./app/global.d.ts"
+  ],
+  "exclude": ["node_modules", "**/*.d.ts"]
+}

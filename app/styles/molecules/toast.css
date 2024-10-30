@@ -1,0 +1,37 @@
+/**
+* Styles for the Toast component
+*/
+@tailwind components;
+@layer components {
+  .__toast-molecule {
+    @apply fixed left-1/2 transform -translate-x-1/2 ease-in bottom-10 px-4 w-72 h-20 py-2 text-white rounded shadow-lg z-50;
+    animation: slide-in 0.3s ease-out forwards; /* Animation for appearing */
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translate(-50%, 100%); /* Start off-screen (below) */
+      opacity: 0; /* Start invisible */
+    }
+    to {
+      transform: translate(-50%, 0); /* End in the centered position */
+      opacity: 1; /* Fade in */
+    }
+  }
+
+  .__toast-molecule .__toast-container {
+    @apply rounded text-white flex items-center justify-between p-[16px] py-[20px] w-[max-content] min-w-[344px] max-w-[960px] gap-[20px] min-h-[68px] m-[8px] shadow-dropdown;
+  }
+
+  .__toast-container .__toast-message {
+    @apply flex items-center justify-center gap-[16px] text-[14px];
+  }
+
+  .__toast-message .__toast-text {
+    @apply h-[22px];
+  }
+
+  .__toast-container .__close-button {
+    @apply text-[12px];
+  }
+}
