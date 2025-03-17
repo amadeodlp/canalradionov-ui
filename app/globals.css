@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import design tokens */
+@import './styles/design-system/tokens.css';
+
+/* Global styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--neutral-900);
+  color: var(--neutral-50);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  transition: background-color var(--transition-normal);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-800);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-600);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Animations and effects */
+.neon-text {
+  text-shadow: 0 0 5px var(--accent),
+              0 0 10px var(--accent),
+              0 0 20px var(--accent);
+}
+
+.glow {
+  filter: drop-shadow(0 0 8px var(--accent));
+}
+
+.glow-primary {
+  filter: drop-shadow(0 0 8px var(--primary));
+}
+
+.glow-secondary {
+  filter: drop-shadow(0 0 8px var(--secondary));
+}
+
+/* Audio player specific */
+.audio-visualizer {
+  height: var(--visualizer-height);
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.audio-visualizer-bar {
+  flex: 1;
+  background: var(--gradient-neon);
+  border-radius: var(--radius-sm);
+  min-width: 3px;
+  max-width: 4px;
+  transform-origin: bottom;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-dark {
+  background: rgba(10, 10, 22, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-lg);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

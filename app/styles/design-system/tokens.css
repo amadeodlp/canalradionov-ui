@@ -1,0 +1,178 @@
+/* Design Tokens for Canal Radionov
+   A comprehensive set of design variables for consistent styling */
+
+:root {
+  /* Color Palette - Neo-retro radio vibe with neon accents */
+  --primary: #6C11FF;
+  --primary-dark: #4A00E0;
+  --primary-light: #8F45FF;
+  --secondary: #FF2975;
+  --secondary-dark: #E10054;
+  --secondary-light: #FF5C96;
+  --accent: #00EEFF;
+  --accent-dark: #00C4D8;
+  --accent-light: #5CFFFF;
+  
+  /* Neutrals */
+  --neutral-900: #0A0A16;
+  --neutral-800: #1A1A2E;
+  --neutral-700: #292945;
+  --neutral-600: #393959;
+  --neutral-500: #52527A;
+  --neutral-400: #6E6E9C;
+  --neutral-300: #9292BD;
+  --neutral-200: #B6B6D9;
+  --neutral-100: #DADAF0;
+  --neutral-50: #F2F2FF;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  --gradient-neon: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 50%, var(--secondary) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--neutral-900) 0%, var(--neutral-700) 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(10, 10, 22, 0.1);
+  --shadow-md: 0 4px 12px rgba(10, 10, 22, 0.15);
+  --shadow-lg: 0 8px 24px rgba(10, 10, 22, 0.2);
+  --shadow-xl: 0 12px 32px rgba(10, 10, 22, 0.25);
+  --shadow-neon: 0 0 15px rgba(108, 17, 255, 0.5);
+  --shadow-glow: 0 0 20px rgba(0, 238, 255, 0.6);
+  
+  /* Typography */
+  --font-heading: 'GeistVF', 'Geist', sans-serif;
+  --font-body: 'GeistVF', 'Geist', sans-serif;
+  --font-mono: 'GeistMonoVF', 'Geist Mono', monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  --text-6xl: 3.75rem;   /* 60px */
+  
+  /* Font Weights */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+  
+  /* Spacing */
+  --spacing-0: 0;
+  --spacing-px: 1px;
+  --spacing-0-5: 0.125rem;  /* 2px */
+  --spacing-1: 0.25rem;     /* 4px */
+  --spacing-1-5: 0.375rem;  /* 6px */
+  --spacing-2: 0.5rem;      /* 8px */
+  --spacing-2-5: 0.625rem;  /* 10px */
+  --spacing-3: 0.75rem;     /* 12px */
+  --spacing-3-5: 0.875rem;  /* 14px */
+  --spacing-4: 1rem;        /* 16px */
+  --spacing-5: 1.25rem;     /* 20px */
+  --spacing-6: 1.5rem;      /* 24px */
+  --spacing-8: 2rem;        /* 32px */
+  --spacing-10: 2.5rem;     /* 40px */
+  --spacing-12: 3rem;       /* 48px */
+  --spacing-16: 4rem;       /* 64px */
+  --spacing-20: 5rem;       /* 80px */
+  --spacing-24: 6rem;       /* 96px */
+  
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;   /* 2px */
+  --radius-md: 0.25rem;    /* 4px */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-xl: 0.75rem;    /* 12px */
+  --radius-2xl: 1rem;      /* 16px */
+  --radius-3xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+  --transition-bounce: 300ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  
+  /* Z-index */
+  --z-behind: -1;
+  --z-normal: 1;
+  --z-elevated: 10;
+  --z-sticky: 100;
+  --z-dropdown: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-tooltip: 500;
+  --z-max: 999;
+  
+  /* Animation */
+  --animation-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animation-bounce: bounce 1s infinite;
+  --animation-spin: spin 1s linear infinite;
+  --animation-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animation-float: float 3s ease-in-out infinite;
+  --animation-wave: wave 1.5s ease-in-out infinite;
+  
+  /* Layout */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+  
+  /* Player-specific tokens */
+  --player-height-minimized: 4rem;
+  --player-height-expanded: 20rem;
+  --player-transition: 300ms cubic-bezier(0.65, 0, 0.35, 1);
+  --visualizer-height: 5rem;
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25%); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.5); }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.6);
+  }
+}

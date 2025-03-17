@@ -1,0 +1,19 @@
+/**
+ * Tailwindcss 3 base config
+ */
+
+/**
+ * This injects Tailwind's base styles and any base styles registered by
+ * plugins.
+ */
+
+@import 'tailwindcss/base';
+
+/**
+  * This injects Tailwind's component classes and any component classes
+  * registered by plugins.
+  */
+
+@import 'tailwindcss/components';
+
+@import url('./molecules/toast.css');
