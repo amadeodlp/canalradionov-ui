@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ShowGrid } from '@components/organisms/ShowGrid/ShowGrid';
+import { RadioShow } from '@api/services/mediaService';
 
 // Mock data for library content
 const USER_LIBRARY = [
@@ -82,20 +83,20 @@ const RECENTLY_PLAYED = [
 ];
 
 export default function Library() {
-  const [activeShow, setActiveShow] = useState<any>(null);
-  
+  const [, setActiveShow] = useState<RadioShow | null>(null);
+
   // Handle show selection
-  const handleShowSelect = (show: any) => {
+  const handleShowSelect = (show: RadioShow) => {
     console.log('Selected show:', show);
     // Navigate to show detail page
     window.location.href = `/shows/${show.id}`;
   };
-  
+
   // Handle show play
-  const handlePlayShow = (show: any) => {
+  const handlePlayShow = (show: RadioShow) => {
     setActiveShow(show);
     console.log('Playing show:', show);
-    
+
     // Dispatch to player context/redux to update the player
     // For now, we'll just update local state
   };

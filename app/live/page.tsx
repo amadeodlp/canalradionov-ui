@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Button } from '@components/atoms/Button/Button';
 import { ChatWindow } from '@components/organisms/ChatWindow/ChatWindow';
 import { mediaService, RadioShow } from '@api/services/mediaService';
@@ -53,9 +54,11 @@ export default function LivePage() {
                 <div className="flex flex-col md:flex-row">
                   {/* Broadcast image */}
                   <div className="md:w-1/3 relative">
-                    <img
+                    <Image
                       src={broadcast.imageUrl}
                       alt={broadcast.title}
+                      width={400}
+                      height={400}
                       className="w-full h-full object-cover aspect-video md:aspect-square"
                     />
                     <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded flex items-center">
@@ -178,7 +181,7 @@ export default function LivePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <Image src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" width={400} height={300} className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 15 minutes
               </div>
@@ -192,7 +195,7 @@ export default function LivePage() {
 
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&auto=format&fit=crop&w=1231&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <Image src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&auto=format&fit=crop&w=1231&q=80" alt="Upcoming broadcast" width={400} height={300} className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 45 minutes
               </div>
@@ -206,7 +209,7 @@ export default function LivePage() {
 
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <Image src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" width={400} height={300} className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 1 hour 20 minutes
               </div>
@@ -220,7 +223,7 @@ export default function LivePage() {
 
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80" alt="Upcoming broadcast" width={400} height={300} className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 2 hours 5 minutes
               </div>

@@ -12,7 +12,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme] = useState<'light' | 'dark'>('dark');
   
   return (
     <html lang="en">
