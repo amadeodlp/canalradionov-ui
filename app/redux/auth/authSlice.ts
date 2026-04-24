@@ -19,7 +19,7 @@ export const signup = createAsyncThunk('auth/signup', async (payload: SignupPayl
     email: payload.email,
     password: payload.password,
     options: {
-      data: { username: payload.username },
+      data: { username: payload.username, app_name: 'Wavecaster' },
       emailRedirectTo: 'https://wavecaster.lat',
     },
   });
