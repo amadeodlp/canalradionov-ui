@@ -1,7 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react';
-import { Logo } from '@components/atoms/Logo/Logo';
 import { AudioPlayer } from '@components/organisms/AudioPlayer/AudioPlayer';
 import { MainNavigation } from '@components/organisms/Navigation/MainNavigation';
 import { ReduxProvider } from './providers/ReduxProvider';
@@ -12,7 +10,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [theme] = useState<'light' | 'dark'>('dark');
   
   return (
     <html lang="en">

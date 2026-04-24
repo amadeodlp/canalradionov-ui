@@ -7,15 +7,10 @@
  * Toast states, use of cases, using const assertions
  */
 
-const variants = ['success', 'error', 'warning', 'info'] as const
+type Variants = 'success' | 'error' | 'warning' | 'info';
 
 /**
- * @description Union type of those string literals defined in the array above
- */
-export type Variants = (typeof variants)[number]
-
-/**
- * @description Export avalable options to match classes
+ * @description Export available options to match classes
  */
 const VariantsRecord: Record<Variants, string> = {
   success: '__success bg-[#4CAF50]',

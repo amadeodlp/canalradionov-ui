@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ShowGrid } from '@components/organisms/ShowGrid/ShowGrid';
 import { Input } from '@components/atoms/Input/Input';
 import { Button } from '@components/atoms/Button/Button';
-import { Dropdown } from '@components/atoms/Dropdown/Dropdown';
 import { mediaService, RadioShow } from '@api/services/mediaService';
 
 // Static categories (no need to fetch these)
@@ -23,7 +23,6 @@ export default function DiscoverPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('');
-  const [activeShow, setActiveShow] = useState<any>(null);
   const [allShows, setAllShows] = useState<RadioShow[]>([]);
 
   useEffect(() => {
@@ -47,14 +46,13 @@ export default function DiscoverPage() {
   });
   
   // Handle show selection
-  const handleShowSelect = (show: any) => {
+  const handleShowSelect = (show: RadioShow) => {
     console.log('Selected show:', show);
     // This would typically navigate to the show detail page
   };
-  
+
   // Handle show play
-  const handlePlayShow = (show: any) => {
-    setActiveShow(show);
+  const handlePlayShow = (show: RadioShow) => {
     console.log('Playing show:', show);
     // This would typically update the global audio player with the selected show
   };
@@ -218,9 +216,11 @@ export default function DiscoverPage() {
           {/* Host cards */}
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center">
             <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
-              <img 
-                src="https://randomuser.me/api/portraits/men/32.jpg" 
-                alt="DJ Pulse" 
+              <Image
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="DJ Pulse"
+                width={80}
+                height={80}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -229,12 +229,14 @@ export default function DiscoverPage() {
             <p className="text-xs text-white/40 mb-4">12 shows • 248 episodes</p>
             <Button variant="outline" size="sm">View Profile</Button>
           </div>
-          
+
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center">
             <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
-              <img 
-                src="https://randomuser.me/api/portraits/women/44.jpg" 
-                alt="Sarah Johnson" 
+              <Image
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                alt="Sarah Johnson"
+                width={80}
+                height={80}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -243,12 +245,14 @@ export default function DiscoverPage() {
             <p className="text-xs text-white/40 mb-4">8 shows • 192 episodes</p>
             <Button variant="outline" size="sm">View Profile</Button>
           </div>
-          
+
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center">
             <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
-              <img 
-                src="https://randomuser.me/api/portraits/men/67.jpg" 
-                alt="Professor Smith" 
+              <Image
+                src="https://randomuser.me/api/portraits/men/67.jpg"
+                alt="Professor Smith"
+                width={80}
+                height={80}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -257,12 +261,14 @@ export default function DiscoverPage() {
             <p className="text-xs text-white/40 mb-4">6 shows • 134 episodes</p>
             <Button variant="outline" size="sm">View Profile</Button>
           </div>
-          
+
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg p-4 flex flex-col items-center text-center">
             <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
-              <img 
-                src="https://randomuser.me/api/portraits/women/68.jpg" 
-                alt="Dr. Lisa Park" 
+              <Image
+                src="https://randomuser.me/api/portraits/women/68.jpg"
+                alt="Dr. Lisa Park"
+                width={80}
+                height={80}
                 className="w-full h-full object-cover"
               />
             </div>

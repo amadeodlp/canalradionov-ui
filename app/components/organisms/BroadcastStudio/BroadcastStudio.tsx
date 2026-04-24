@@ -38,7 +38,7 @@ export const BroadcastStudio: React.FC<BroadcastStudioProps> = ({
   useEffect(() => {
     if (audioStream && !audioContext.current) {
       // Create audio context
-      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioContext.current = new (window.AudioContext || (window as unknown).webkitAudioContext)();
       
       // Create analyser
       analyser.current = audioContext.current.createAnalyser();

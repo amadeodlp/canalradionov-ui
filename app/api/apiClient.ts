@@ -2,11 +2,11 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } f
 import Cookies from 'js-cookie';
 
 // Define API response type
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data: T;
   status: number;
   statusText: string;
-  headers: any;
+  headers: Record<string, unknown>;
 }
 
 // Define error response type
@@ -14,7 +14,7 @@ export interface ApiError {
   message: string;
   code?: string;
   status?: number;
-  data?: any;
+  data?: unknown;
 }
 
 // Custom endpoints
@@ -39,7 +39,7 @@ export enum ApiEndpoints {
   LIKE_SHOW = '/api/interaction/likes/show/{showId}',
   LIKE_EPISODE = '/api/interaction/likes/episode/{episodeId}',
   GET_USER_PROFILE = '/api/users/profile',
-  UPDATE_USER_PROFILE = '/api/users/profile',
+  UPDATE_USER_PROFILE = '/api/users/profile/update',
 }
 
 class ApiClient {
@@ -177,10 +177,10 @@ class ApiClient {
   }
   
   // Generic request method
-  private async request<T = any>(
+  private async request<T = unknown>(
     method: string,
     url: string,
-    data?: any,
+    data?: unknown,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     try {
@@ -212,7 +212,7 @@ class ApiClient {
   }
   
   // HTTP methods
-  public async get<T = any>(
+  public async get<T = unknown>(
     url: string,
     params?: Record<string, string | number>,
     config?: AxiosRequestConfig
@@ -224,9 +224,9 @@ class ApiClient {
     });
   }
 
-  public async post<T = any>(
+  public async post<T = unknown>(
     url: string,
-    data?: any,
+    data?: unknown,
     params?: Record<string, string | number>,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
@@ -234,9 +234,9 @@ class ApiClient {
     return this.request<T>('POST', finalUrl, data, config);
   }
 
-  public async put<T = any>(
+  public async put<T = unknown>(
     url: string,
-    data?: any,
+    data?: unknown,
     params?: Record<string, string | number>,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
@@ -244,7 +244,7 @@ class ApiClient {
     return this.request<T>('PUT', finalUrl, data, config);
   }
 
-  public async delete<T = any>(
+  public async delete<T = unknown>(
     url: string,
     params?: Record<string, string | number>,
     config?: AxiosRequestConfig
@@ -253,9 +253,9 @@ class ApiClient {
     return this.request<T>('DELETE', finalUrl, undefined, config);
   }
 
-  public async patch<T = any>(
+  public async patch<T = unknown>(
     url: string,
-    data?: any,
+    data?: unknown,
     params?: Record<string, string | number>,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {

@@ -18,7 +18,6 @@ interface AudioVisualizerProps {
 
 export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
   audioRef,
-  color = 'var(--gradient-neon)',
   barCount = 64,
   height = 50,
   barWidth = 3,
@@ -75,7 +74,7 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     
     const setupAnalyzer = () => {
       try {
-        context = new (window.AudioContext || (window as any).webkitAudioContext)();
+        context = new (window.AudioContext || (window as unknown).webkitAudioContext)();
         source = context.createMediaElementSource(audioRef.current!);
         newAnalyser = context.createAnalyser();
         

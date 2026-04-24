@@ -110,9 +110,10 @@ const SignUpForm: React.FC = () => {
       }
       await dispatch(signup(payload));
       router.push(`/login?justCreated=true`)
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorStr = error instanceof Error ? error.message : String(error);
       console.log(error, 'error')
-      if (error.toString().includes('USERNAME_EXISTS')) {
+      if (errorStr.includes('USERNAME_EXISTS')) {
         setToastState({
           message: 'An account with this email already exists.',
           open: true,

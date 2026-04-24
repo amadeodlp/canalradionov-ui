@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { PlayPauseButton } from '@components/atoms/PlayPauseButton/PlayPauseButton';
 import { AudioVisualizer } from '@components/atoms/AudioVisualizer/AudioVisualizer';
 import { Toast } from "@components/Molecules/Toast/Toast";
@@ -38,16 +39,6 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVolumeVisible, setIsVolumeVisible] = useState(false);
   const [audioSrc, setAudioSrc] = useState(streamUrl || '');
-  
-  // Notification state
-  const [toastState, setToastState] = useState({ 
-    open: false, 
-    variant: "success" as "success" | "error", 
-    message: "" 
-  });
-  
-  // Animation state
-  const [showAnimation, setShowAnimation] = useState(false);
   
   // Refs
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -314,10 +305,11 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         {/* Album art & info */}
         <div className="flex items-center space-x-4 w-1/3">
           <div className="relative w-12 h-12 rounded-md overflow-hidden flex-shrink-0">
-            <img 
-              src={showImage} 
-              alt={showTitle} 
-              className="object-cover w-full h-full"
+            <Image
+              src={showImage}
+              alt={showTitle}
+              fill
+              className="object-cover"
             />
             {isLive && (
               <div className="absolute top-1 left-1 bg-red-600 text-white text-xs px-1 rounded">
@@ -407,10 +399,11 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         <div className="flex flex-col items-center justify-start w-full max-w-2xl">
           {/* Album Art (Large) */}
           <div className="relative w-40 h-40 md:w-52 md:h-52 rounded-lg overflow-hidden mb-6">
-            <img 
-              src={showImage} 
-              alt={showTitle} 
-              className="object-cover w-full h-full"
+            <Image
+              src={showImage}
+              alt={showTitle}
+              fill
+              className="object-cover"
             />
             {isLive && (
               <div className="absolute top-2 left-2 bg-red-600 text-white text-sm px-2 py-1 rounded">

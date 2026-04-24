@@ -4,6 +4,7 @@ import { LoginInput } from '@components/atoms/LoginInput/LoginInput'
 import { Logo } from '@components/atoms/Logo/Logo'
 import { Spinner } from "@components/atoms/Spinner/Spinner"
 import { Toast } from "@components/Molecules/Toast/Toast"
+import Image from 'next/image'
 import { useAppDispatch } from "@hooks"
 import { login } from "@redux/auth/authSlice"
 import { emailRegex } from "@utils/regex"
@@ -25,10 +26,10 @@ export const LoginForm: React.FC = () => {
     if (justCreated) {
       setToastState({ open: true, variant: "success", message: "Account created Succesfully Please sign in." });
       setTimeout(() => {
-        setToastState({ ...toastState, open: false });
+        setToastState(prev => ({ ...prev, open: false }));
       }, 5000);
     }
-  }, []);
+  }, [searchParams]);
 
   const validate = () => {
     if (!emailRegex.test(email)) {
@@ -50,8 +51,9 @@ export const LoginForm: React.FC = () => {
       await dispatch(login({ username: email, password }));
       router.push('/');
       setIsSubmitting(false);
-    } catch (error: any) {
-      if(error.toString().includes('INVALID_CREDENTIALS')) {
+    } catch (error: unknown) {
+      const errorStr = error instanceof Error ? error.message : String(error);
+      if(errorStr.includes('INVALID_CREDENTIALS')) {
         setError('Invalid email or password')
       } else {
         setError('An error occurred during authentication')
@@ -99,7 +101,7 @@ export const LoginForm: React.FC = () => {
       <div className="self-start">
         {error && (
           <div className="flex justify-center items-center gap-1 mb-3">
-            <img src="/assets/mark.png" alt="error-icon" className="w-5 h-5" />
+            <Image src="/assets/mark.png" alt="error-icon" width={20} height={20} className="w-5 h-5" />
             <p className="text-[#d00e17] text-xs">{error}</p>
           </div>
         )}
@@ -114,7 +116,7 @@ export const LoginForm: React.FC = () => {
         Continue
       </Button>
       <div className="flex justify-center items-center gap-1">
-        <p className="text-gray-600 text-sm">Don't have an account?</p>
+        <p className="text-gray-600 text-sm">Don&apos;t have an account?</p>
         <a href="/signup" className="text-blue-600 font-bold cursor-pointer">
           Sign up
         </a>

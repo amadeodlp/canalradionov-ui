@@ -90,7 +90,7 @@ export default function BroadcastPage() {
                 <path d="M8 10.5H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M8 14H13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <h3 className="text-xl font-semibold mb-2">Chat will be available when you're live</h3>
+              <h3 className="text-xl font-semibold mb-2">Chat will be available when you&apos;re live</h3>
               <p className="text-white/60 text-center">
                 Start your broadcast to activate the live chat and interact with your listeners.
               </p>

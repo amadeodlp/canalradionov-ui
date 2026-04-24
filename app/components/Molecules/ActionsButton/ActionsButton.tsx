@@ -1,5 +1,6 @@
 "use client"
 import { Spinner } from "@components/atoms/Spinner/Spinner"
+import Image from 'next/image'
 import { useAppDispatch } from "@hooks"
 import React, { useState, useEffect, useRef } from 'react'
 import { logout } from "@redux/auth/authSlice"
@@ -77,17 +78,19 @@ export const ActionsButton: React.FC<ActionsButtonProps> = ({
     <div className={`relative border border-black rounded inline-block ${classnames}`} ref={dropdownRef}>
       <button
         onClick={(e) => {
-          toggleDropdown()
-          onClick && onClick(e)
+          toggleDropdown();
+          onClick?.(e);
         }}
         disabled={disabled}
         className={`w-60 h-20 p-3 font-bold rounded transition-all flex items-center justify-between ${getVariantStyles(
           variant
         )}`}
       >
-        <img
+        <Image
           src={profilePicture}
           alt="Profile"
+          width={64}
+          height={64}
           className="rounded-full object-cover w-16 h-16 mr-3"
         />
         <span className="flex-grow text-left text-[#edebeb]">{children}</span>

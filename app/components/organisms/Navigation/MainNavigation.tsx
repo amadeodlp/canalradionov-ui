@@ -9,9 +9,6 @@ export const MainNavigation: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   
-  // Mock authentication state (would come from auth context in a real app)
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };

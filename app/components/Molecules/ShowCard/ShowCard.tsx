@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { PlayPauseButton } from '@components/atoms/PlayPauseButton/PlayPauseButton';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
@@ -94,18 +95,19 @@ export const ShowCard: React.FC<ShowCardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image with overlay */}
-      <div 
+      <div
         className={`
           relative overflow-hidden
           ${imageContainerClasses[size]}
         `}
       >
         {/* Background image */}
-        <img 
-          src={imageUrl} 
-          alt={title} 
+        <Image
+          src={imageUrl}
+          alt={title}
+          fill
           className={`
-            w-full h-full object-cover
+            object-cover
             transition-transform duration-500
             ${isHovered ? 'scale-110' : 'scale-100'}
           `}

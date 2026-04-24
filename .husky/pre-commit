@@ -1,9 +1,17 @@
 #!/bin/sh
 
-echo "🔍 Running type checks..."
+echo "🔍 Running TypeScript type checks..."
 if npx tsc --noEmit 2>&1 | grep -v date-fns | grep -q "error TS"; then
   echo "❌ Type errors found. Fix them before committing."
   npx tsc --noEmit 2>&1 | grep "error TS" | grep -v date-fns
+  exit 1
+fi
+
+echo "🔍 Running ESLint..."
+ESLINT_OUTPUT=$(npx eslint app 2>&1)
+if echo "$ESLINT_OUTPUT" | grep -q " error "; then
+  echo "❌ Linting errors found. Fix them before committing."
+  echo "$ESLINT_OUTPUT"
   exit 1
 fi
 

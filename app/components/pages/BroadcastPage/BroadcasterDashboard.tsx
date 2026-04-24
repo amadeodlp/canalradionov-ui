@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@components/atoms/Button/Button';
-import { Input } from '@components/atoms/Input/Input';
 import BroadcastStudio from '@components/organisms/BroadcastStudio/BroadcastStudio';
 import ChatWindow from '@components/organisms/ChatWindow/ChatWindow';
 
@@ -23,7 +22,6 @@ export const BroadcasterDashboard: React.FC<BroadcasterDashboardProps> = ({
   userName
 }) => {
   const [activeTab, setActiveTab] = useState<'broadcast' | 'schedule' | 'analytics'>('broadcast');
-  const [isRecording, setIsRecording] = useState(false);
   const [isBroadcasting, setIsBroadcasting] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [stats, setStats] = useState<BroadcastStats>({
@@ -376,7 +374,7 @@ export const BroadcasterDashboard: React.FC<BroadcasterDashboardProps> = ({
                   </svg>
                 </div>
                 <div className="text-3xl font-bold text-white">{stats.peakListeners}</div>
-                <div className="text-xs text-green-400 mt-1">During "Weekend Hits" show</div>
+                <div className="text-xs text-green-400 mt-1">During &quot;Weekend Hits&quot; show</div>
               </div>
               
               <div className="bg-neutral-800 rounded-xl p-6">

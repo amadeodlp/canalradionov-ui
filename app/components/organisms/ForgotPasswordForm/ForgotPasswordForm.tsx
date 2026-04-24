@@ -4,6 +4,7 @@ import { LoginInput } from '@components/atoms/LoginInput/LoginInput'
 import { Logo } from '@components/atoms/Logo/Logo'
 import { Spinner } from "@components/atoms/Spinner/Spinner"
 import { Toast } from "@components/Molecules/Toast/Toast"
+import Image from 'next/image'
 import { emailRegex } from "@utils/regex"
 import { resetPassword } from "aws-amplify/auth"
 import React, { useState } from 'react'
@@ -57,7 +58,7 @@ export const ForgotPasswordForm: React.FC = () => {
       <div className="self-start">
         {error && (
           <div className="flex justify-center items-center gap-1 mb-3">
-            <img src="/assets/mark.png" alt="error-icon" className="w-5 h-5" />
+            <Image src="/assets/mark.png" alt="error-icon" width={20} height={20} className="w-5 h-5" />
             <p className="text-[#d00e17] text-xs">Email is not valid</p>
           </div>
         )}

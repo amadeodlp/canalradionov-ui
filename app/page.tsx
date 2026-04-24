@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@components/atoms/Button/Button';
 import { ShowGrid } from '@components/organisms/ShowGrid/ShowGrid';
@@ -80,13 +80,11 @@ export default function Home() {
   const [trendingShows, setTrendingShows]   = useState<RadioShow[]>([]);
   const [recommendedShows, setRecommendedShows] = useState<RadioShow[]>([]);
 
-  useEffect(() => {
-    mediaService.getAllShows().then(shows => {
-      setFeaturedShows(shows.slice(0, 6));
-      setTrendingShows(shows.slice(0, 4));
-      setRecommendedShows(shows.slice(4, 8));
-    });
-  }, []);
+  mediaService.getAllShows().then(shows => {
+    setFeaturedShows(shows.slice(0, 6));
+    setTrendingShows(shows.slice(0, 4));
+    setRecommendedShows(shows.slice(4, 8));
+  });
 
   // Handle show selection
   const handleShowSelect = (show: RadioShow) => {

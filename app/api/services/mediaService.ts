@@ -80,7 +80,7 @@ class MediaService {
   async incrementPlayCount(episodeId: string): Promise<void> {
     await supabase
       .from('episodes')
-      .update({ play_count: supabase.rpc as any })
+      .update({ play_count: supabase.rpc as unknown })
       .eq('id', episodeId)
       .catch(() => {});
   }

@@ -3,13 +3,13 @@ import { Button } from '@components/atoms/Button/Button'
 import { LoginInput } from '@components/atoms/LoginInput/LoginInput'
 import { Logo } from '@components/atoms/Logo/Logo'
 import { Spinner } from "@components/atoms/Spinner/Spinner"
+import Image from 'next/image'
 import { confirmSignUp, resendSignUpCode } from "aws-amplify/auth"
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react'
 
 export const ConfirmationCodeForm: React.FC = () => {
   const [confirmationCode, setConfirmationCode] = useState('')
-  const [toastState, setToastState] = useState({ open: false, variant: "success", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isResending, setIsResending] = useState(false)
   const [error, setError] = useState<string>("")
@@ -27,13 +27,14 @@ export const ConfirmationCodeForm: React.FC = () => {
       await confirmSignUp({username: email, confirmationCode})
       setIsSubmitting(false);
       router.push(`/login?confirmed=true`)
-    } catch (error: any) {
+    } catch (error: unknown) {
       setIsSubmitting(false);
-      if (error.toString().includes('ExpiredCodeException')) {
-        setToastState({ open: true, variant: "error", message: "The code has expired. Please request a new one." });
+      const errorStr = error instanceof Error ? error.message : String(error);
+      if (errorStr.includes('ExpiredCodeException')) {
+        setError("The code has expired. Please request a new one.");
       }
       else {
-        setToastState({ open: true, variant: "error", message: "Invalid code. Please try again." });
+        setError("Invalid code. Please try again.");
       }
     }
   }
@@ -43,14 +44,14 @@ export const ConfirmationCodeForm: React.FC = () => {
     try {
       setIsResending(true);
       await resendSignUpCode({username: email})
-      setToastState({ open: true, variant: "success", message: "Code resent successfully. Check your inbox." });
+      setError("Code resent successfully. Check your inbox.");
       setIsResending(false);
       setTimeout(() => {
-        setToastState({ ...toastState, open: false });
+        setError("");
       }, 5000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log(error, 'error')
-      setToastState({ open: true, variant: "error", message: "An error occurred. Please try again." });
+      setError("An error occurred. Please try again.");
       setIsResending(false);
     }
   }
@@ -65,7 +66,7 @@ export const ConfirmationCodeForm: React.FC = () => {
       <Logo src="/assets/flyer.webp" alt="Canal Radionov" />
       <h2 className="text-xl font-semibold mt-4">Verify your email</h2>
       <p className="text-gray-600 text-center">
-        Enter the verification code we sent to {email}. If you didn't receive a code, check your spam folder.
+        Enter the verification code we sent to {email}. If you didn&apos;t receive a code, check your spam folder.
       </p>
 
       <div className="w-full">
@@ -81,7 +82,7 @@ export const ConfirmationCodeForm: React.FC = () => {
       <div className="self-start">
         {error && (
           <div className="flex justify-center items-center gap-1 mb-3">
-            <img src="/assets/mark.png" alt="error-icon" className="w-5 h-5" />
+            <Image src="/assets/mark.png" alt="error-icon" width={20} height={20} className="w-5 h-5" />
             <p className="text-[#d00e17] text-xs">{error}</p>
           </div>
         )}
