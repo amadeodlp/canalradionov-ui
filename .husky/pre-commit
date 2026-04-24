@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "🔍 Running type checks..."
+if npx tsc --noEmit 2>&1 | grep -v date-fns | grep -q "error TS"; then
+  echo "❌ Type errors found. Fix them before committing."
+  npx tsc --noEmit 2>&1 | grep "error TS" | grep -v date-fns
+  exit 1
+fi
+
+echo "✅ All checks passed!"
+exit 0
