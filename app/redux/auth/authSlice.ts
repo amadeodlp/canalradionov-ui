@@ -18,7 +18,10 @@ export const signup = createAsyncThunk('auth/signup', async (payload: SignupPayl
   const { data, error } = await supabase.auth.signUp({
     email: payload.email,
     password: payload.password,
-    options: { data: { username: payload.username } },
+    options: {
+      data: { username: payload.username },
+      emailRedirectTo: 'https://wavecaster.lat',
+    },
   });
   if (error) {
     if (error.message.includes('already registered')) return rejectWithValue('USERNAME_EXISTS');
