@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Button } from '@components/atoms/Button/Button';
 import { ShowGrid } from '@components/organisms/ShowGrid/ShowGrid';
 import { mediaService, RadioShow } from '@api/services/mediaService';
@@ -61,95 +62,6 @@ const FEATURED_SHOWS: RadioShow[] = [
   }
 ];
 
-// Mock data for trending shows
-const TRENDING_SHOWS = [
-  {
-    id: 'trend1',
-    title: 'Crypto Today',
-    hostName: 'BlockchainBob',
-    description: 'Daily updates on cryptocurrency markets, blockchain technology, and NFT trends.',
-    imageUrl: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80',
-    isLive: false,
-    tags: ['Cryptocurrency', 'Finance', 'Technology'],
-    episodes: new Array(52),
-  },
-  {
-    id: 'trend2',
-    title: 'Indie Spotlight',
-    hostName: 'Melody Finder',
-    description: 'Discover the best indie music from around the world with artist interviews and live sessions.',
-    imageUrl: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: true,
-    tags: ['Indie', 'Music Discovery', 'Interviews'],
-    episodes: new Array(28),
-  },
-  {
-    id: 'trend3',
-    title: 'Planet Earth',
-    hostName: 'Dr. Emma Green',
-    description: 'Exploring environmental issues, climate science, and sustainability initiatives worldwide.',
-    imageUrl: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80',
-    isLive: false,
-    scheduledTime: new Date(Date.now() + 129600000).toISOString(), // 36 hours from now
-    tags: ['Environment', 'Science', 'Sustainability'],
-    episodes: new Array(19),
-  },
-  {
-    id: 'trend4',
-    title: 'Game On',
-    hostName: 'PlayerOne',
-    description: 'Weekly gaming news, reviews, and interviews with developers and pro gamers.',
-    imageUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: false,
-    tags: ['Gaming', 'Esports', 'Reviews'],
-    episodes: new Array(31),
-  }
-];
-
-// Mock data for recommended shows
-const RECOMMENDED_SHOWS = [
-  {
-    id: 'rec1',
-    title: 'History Uncovered',
-    hostName: 'Professor Smith',
-    description: 'Deep dives into overlooked historical events and figures that shaped our world.',
-    imageUrl: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80',
-    isLive: false,
-    tags: ['History', 'Education', 'Documentary'],
-    episodes: new Array(45),
-  },
-  {
-    id: 'rec2',
-    title: 'The Foodie Hour',
-    hostName: 'Chef Ramiro',
-    description: 'Culinary adventures, food history, and interviews with renowned chefs from around the world.',
-    imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: false,
-    scheduledTime: new Date(Date.now() + 172800000).toISOString(), // 48 hours from now
-    tags: ['Food', 'Cooking', 'Culture'],
-    episodes: new Array(22),
-  },
-  {
-    id: 'rec3',
-    title: 'Mind Matters',
-    hostName: 'Dr. Lisa Park',
-    description: 'Exploring psychology, mental health, and the latest in neuroscience research.',
-    imageUrl: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: false,
-    tags: ['Psychology', 'Mental Health', 'Science'],
-    episodes: new Array(37),
-  },
-  {
-    id: 'rec4',
-    title: 'Global Beats',
-    hostName: 'DJ WorldWide',
-    description: 'Showcase of music traditions and contemporary sounds from across the globe.',
-    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: false,
-    tags: ['World Music', 'Cultural', 'Entertainment'],
-    episodes: new Array(29),
-  },
-];
 
 // Mock categories
 const CATEGORIES = [
@@ -164,7 +76,6 @@ const CATEGORIES = [
 ];
 
 export default function Home() {
-  const [activeShow, setActiveShow] = useState<any>(null);
   const [featuredShows, setFeaturedShows]   = useState<RadioShow[]>(FEATURED_SHOWS);
   const [trendingShows, setTrendingShows]   = useState<RadioShow[]>([]);
   const [recommendedShows, setRecommendedShows] = useState<RadioShow[]>([]);
@@ -176,12 +87,15 @@ export default function Home() {
       setRecommendedShows(shows.slice(4, 8));
     });
   }, []);
-  
+
+  // Handle show selection
+  const handleShowSelect = (show: RadioShow) => {
+    console.log('Selected show:', show);
+  };
+
   // Handle show play
-  const handlePlayShow = (show: any) => {
-    setActiveShow(show);
+  const handlePlayShow = (show: RadioShow) => {
     console.log('Playing show:', show);
-    // This would typically update the global audio player with the selected show
   };
   
   return (
@@ -190,9 +104,10 @@ export default function Home() {
       <section className="relative mt-8 mb-16 rounded-2xl overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90 z-10"></div>
         <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" 
-            alt="Wavecaster Hero" 
+          <Image
+            src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            alt="Wavecaster Hero"
+            fill
             className="w-full h-full object-cover"
           />
         </div>
@@ -294,9 +209,11 @@ export default function Home() {
           </div>
           
           <div className="md:w-1/3 flex justify-center">
-            <img 
-              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" 
-              alt="Community" 
+            <Image
+              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
+              alt="Community"
+              width={500}
+              height={500}
               className="w-full max-w-sm rounded-lg"
             />
           </div>
