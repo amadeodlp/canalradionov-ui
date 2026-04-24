@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@components/atoms/Button/Button';
 import { ShowGrid } from '@components/organisms/ShowGrid/ShowGrid';
+import { mediaService, RadioShow } from '@api/services/mediaService';
 
-// Mock data for featured shows
-const FEATURED_SHOWS = [
+// fallback so the page renders while loading
+const FEATURED_SHOWS: RadioShow[] = [
   {
     id: 'show1',
     title: 'Electronic Horizons',
@@ -164,13 +165,17 @@ const CATEGORIES = [
 
 export default function Home() {
   const [activeShow, setActiveShow] = useState<any>(null);
-  
-  // Handle show selection
-  const handleShowSelect = (show: any) => {
-    console.log('Selected show:', show);
-    // This would typically navigate to the show detail page
-    // For now, we'll just log it
-  };
+  const [featuredShows, setFeaturedShows]   = useState<RadioShow[]>(FEATURED_SHOWS);
+  const [trendingShows, setTrendingShows]   = useState<RadioShow[]>([]);
+  const [recommendedShows, setRecommendedShows] = useState<RadioShow[]>([]);
+
+  useEffect(() => {
+    mediaService.getAllShows().then(shows => {
+      setFeaturedShows(shows.slice(0, 6));
+      setTrendingShows(shows.slice(0, 4));
+      setRecommendedShows(shows.slice(4, 8));
+    });
+  }, []);
   
   // Handle show play
   const handlePlayShow = (show: any) => {
@@ -223,7 +228,7 @@ export default function Home() {
       <section className="mb-16">
         <ShowGrid 
           title="Featured Shows"
-          shows={FEATURED_SHOWS}
+          shows={featuredShows}
           onShowSelect={handleShowSelect}
           onPlay={handlePlayShow}
           featuredIndex={0}
@@ -253,7 +258,7 @@ export default function Home() {
       <section className="mb-16">
         <ShowGrid 
           title="Trending Shows"
-          shows={TRENDING_SHOWS}
+          shows={trendingShows}
           onShowSelect={handleShowSelect}
           onPlay={handlePlayShow}
           cardSize="md"
@@ -302,7 +307,7 @@ export default function Home() {
       <section className="mb-16">
         <ShowGrid 
           title="Recommended for You"
-          shows={RECOMMENDED_SHOWS}
+          shows={recommendedShows}
           onShowSelect={handleShowSelect}
           onPlay={handlePlayShow}
           cardSize="md"

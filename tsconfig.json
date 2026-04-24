@@ -29,6 +29,7 @@
       "@redux/*": ["./app/redux/*"],
       "@hooks": ["./app/hooks/hooks.ts"],
       "@api/*": ["./app/api/*"],
+      "@lib/*": ["./app/lib/*"],
     },
     "typeRoots": ["./node_modules/@types", "./app/global.d.ts"]
   },

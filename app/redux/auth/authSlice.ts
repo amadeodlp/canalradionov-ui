@@ -1,78 +1,57 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { signUp } from "aws-amplify/auth";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { supabase } from '@lib/supabase';
 
 export interface AuthState {
   isAuthenticated: boolean;
+  userId: string | null;
+  username: string | null;
   error: string | null;
-  scopes: string[];
 }
 
 export type SignupPayload = {
-  username: string;
+  email: string;
   password: string;
-  options: {
-    userAttributes: {
-      email: string;
-      given_name: string;
-      family_name: string;
-      phone_number: string;
-      'custom:userType': string;
-      'custom:account': string;
-      zoneinfo: string;
-    }
-  }
+  username: string;
 };
 
 export const signup = createAsyncThunk('auth/signup', async (payload: SignupPayload, { rejectWithValue }) => {
-  try {
-    await signUp(payload);
-  } catch (error: any) {
-    if (error.toString().includes('UsernameExistsException')) {
-      return rejectWithValue('USERNAME_EXISTS');
-    } else {
-      return rejectWithValue('UNKNOWN_ERROR');
-    }
-  }
-});
-
-export const login = createAsyncThunk('auth/login', async (payload: { username: string; password: string }, { dispatch, rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${process.env.apiUrl}/login`, 
-      { orgId: process.env.orgId, username: payload.username, password: payload.password },
-      { withCredentials: true });
-    console.log(response, 'response from server')
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      throw new Error('An error occurred during session initialization.');
-    }
-  } catch (error) {
-    console.log(error, 'error');
+  const { data, error } = await supabase.auth.signUp({
+    email: payload.email,
+    password: payload.password,
+    options: { data: { username: payload.username } },
+  });
+  if (error) {
+    if (error.message.includes('already registered')) return rejectWithValue('USERNAME_EXISTS');
     return rejectWithValue('UNKNOWN_ERROR');
   }
+  return { userId: data.user?.id, username: payload.username };
+});
+
+export const login = createAsyncThunk('auth/login', async (payload: { username: string; password: string }, { rejectWithValue }) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: payload.username, // field is named username in the form but holds email
+    password: payload.password,
+  });
+  if (error) return rejectWithValue('INVALID_CREDENTIALS');
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('username, display_name')
+    .eq('id', data.user.id)
+    .single();
+
+  return { userId: data.user.id, username: profile?.username || data.user.email };
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-  const accessToken = Cookies.get('jwt-token');
-  try {
-    await axios.post(`${process.env.apiUrl}/logout`, {}, {
-      withCredentials: true,
-      headers: {
-        'Authorization': `${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    });
-  } catch (error) {
-    console.error('Logout failed:', error);
-  }
+  await supabase.auth.signOut();
 });
 
 const initialState: AuthState = {
   isAuthenticated: false,
+  userId: null,
+  username: null,
   error: null,
-  scopes: [],
 };
 
 const authSlice = createSlice({
@@ -81,28 +60,31 @@ const authSlice = createSlice({
   reducers: {
     clearError(state) {
       state.error = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(signup.fulfilled, (state) => {
+      .addCase(signup.fulfilled, (state, action) => {
         state.error = null;
+        state.userId   = action.payload?.userId ?? null;
+        state.username = action.payload?.username ?? null;
       })
       .addCase(signup.rejected, (state, action) => {
         state.error = action.payload as string;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isAuthenticated = true;
-        state.scopes = action.payload.scopes;
+        state.userId   = action.payload.userId;
+        state.username = action.payload.username ?? null;
+        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.payload as string;
       })
       .addCase(logout.fulfilled, (state) => {
         state.isAuthenticated = false;
-        state.scopes = [];
-      }).addCase(logout.rejected, (state, action) => {
-        state.error = action.payload as string;
+        state.userId   = null;
+        state.username = null;
       });
   },
 });

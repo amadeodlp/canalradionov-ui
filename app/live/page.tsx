@@ -4,9 +4,16 @@ import { useState, useEffect } from 'react';
 import { ShowCard } from '@components/Molecules/ShowCard/ShowCard';
 import { Button } from '@components/atoms/Button/Button';
 import { ChatWindow } from '@components/organisms/ChatWindow/ChatWindow';
+import { mediaService, RadioShow } from '@api/services/mediaService';
 
-// Mock live broadcasts data
-const LIVE_BROADCASTS = [
+export default function LivePage() {
+  const [selectedBroadcast, setSelectedBroadcast] = useState<any>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [liveBroadcasts, setLiveBroadcasts] = useState<RadioShow[]>([]);
+
+  useEffect(() => {
+    mediaService.getLiveShows().then(setLiveBroadcasts);
+  }, []);
   {
     id: 'live1',
     title: 'Electronic Horizons',
@@ -103,7 +110,7 @@ export default function LivePage() {
         {/* Broadcasts list */}
         <div className="lg:col-span-2">
           <div className="grid grid-cols-1 gap-6">
-            {LIVE_BROADCASTS.map(broadcast => (
+            {liveBroadcasts.map(broadcast => (
               <div 
                 key={broadcast.id}
                 className={`

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Logo } from '@components/atoms/Logo/Logo';
 import { AudioPlayer } from '@components/organisms/AudioPlayer/AudioPlayer';
 import { MainNavigation } from '@components/organisms/Navigation/MainNavigation';
+import { ReduxProvider } from './providers/ReduxProvider';
 import './globals.css';
 
 export default function RootLayout({
@@ -20,6 +21,7 @@ export default function RootLayout({
         <meta name="description" content="Where anyone can become an internet radio broadcaster" />
       </head>
       <body className="min-h-screen bg-neutral-900 text-neutral-50">
+        <ReduxProvider>
         {/* Navigation */}
         <MainNavigation />
         
@@ -99,6 +101,7 @@ export default function RootLayout({
           streamUrl=""
           isLive={false}
         />
+        </ReduxProvider>
       </body>
     </html>
   );

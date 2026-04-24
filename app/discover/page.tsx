@@ -5,9 +5,9 @@ import { ShowGrid } from '@components/organisms/ShowGrid/ShowGrid';
 import { Input } from '@components/atoms/Input/Input';
 import { Button } from '@components/atoms/Button/Button';
 import { Dropdown } from '@components/atoms/Dropdown/Dropdown';
+import { mediaService, RadioShow } from '@api/services/mediaService';
 
-// Mock featured shows data
-const FEATURED_SHOWS = [
+const CATEGORIES = [
   {
     id: 'show1',
     title: 'Electronic Horizons',
@@ -97,7 +97,7 @@ const TRENDING_SHOWS = [
   },
 ];
 
-// Mock categories
+// Static categories (no need to fetch these)
 const CATEGORIES = [
   { id: 'music', name: 'Music', showCount: 248 },
   { id: 'talkShows', name: 'Talk Shows', showCount: 187 },
@@ -110,41 +110,29 @@ const CATEGORIES = [
 ];
 
 export default function DiscoverPage() {
-  // State
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [activeShow, setActiveShow] = useState<any>(null);
+  const [allShows, setAllShows] = useState<RadioShow[]>([]);
+
+  useEffect(() => {
+    mediaService.getAllShows().then(setAllShows);
+  }, []);
   
-  // Combined shows for display
-  const allShows = [...FEATURED_SHOWS, ...TRENDING_SHOWS];
-  
-  // Filter shows based on search query and category
   const filteredShows = allShows.filter(show => {
-    const matchesSearch = searchQuery === '' || 
+    const matchesSearch = searchQuery === '' ||
       show.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      show.hostName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      show.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (show.host_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (show.description || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       (show.tags && show.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
-    
-    const matchesCategory = selectedCategory === '' || 
+    const matchesCategory = selectedCategory === '' ||
       (show.tags && show.tags.some(tag => tag.toLowerCase() === selectedCategory.toLowerCase()));
-    
     return matchesSearch && matchesCategory;
   });
-  
-  // Sort shows based on sort option
+
   const sortedShows = [...filteredShows].sort((a, b) => {
-    if (sortBy === 'recent') {
-      // Sort by most recent (mock - would use actual timestamp in real app)
-      return b.id.localeCompare(a.id);
-    } else if (sortBy === 'popular') {
-      // Sort by popularity (mock - using episode count as proxy)
-      return b.episodes.length - a.episodes.length;
-    } else if (sortBy === 'az') {
-      // Sort alphabetically
-      return a.title.localeCompare(b.title);
-    }
+    if (sortBy === 'az') return a.title.localeCompare(b.title);
     return 0;
   });
   
