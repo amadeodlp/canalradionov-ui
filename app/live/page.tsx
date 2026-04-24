@@ -1,98 +1,29 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { ShowCard } from '@components/Molecules/ShowCard/ShowCard';
 import { Button } from '@components/atoms/Button/Button';
 import { ChatWindow } from '@components/organisms/ChatWindow/ChatWindow';
 import { mediaService, RadioShow } from '@api/services/mediaService';
 
-export default function LivePage() {
-  const [selectedBroadcast, setSelectedBroadcast] = useState<any>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [liveBroadcasts, setLiveBroadcasts] = useState<RadioShow[]>([]);
-
-  useEffect(() => {
-    mediaService.getLiveShows().then(setLiveBroadcasts);
-  }, []);
-  {
-    id: 'live1',
-    title: 'Electronic Horizons',
-    hostName: 'DJ Pulse',
-    description: 'Explore the latest electronic music trends with weekly guests and exclusive premieres.',
-    imageUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: true,
-    tags: ['Electronic', 'Dance', 'House'],
-    episodes: new Array(12),
-    listenerCount: 248,
-    startTime: '2:15:30', // Duration of stream so far
-  },
-  {
-    id: 'live2',
-    title: 'Indie Spotlight',
-    hostName: 'Melody Finder',
-    description: 'Discover the best indie music from around the world with artist interviews and live sessions.',
-    imageUrl: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: true,
-    tags: ['Indie', 'Music Discovery', 'Interviews'],
-    episodes: new Array(28),
-    listenerCount: 187,
-    startTime: '0:45:12', // Duration of stream so far
-  },
-  {
-    id: 'live3',
-    title: 'Tech Talk Daily',
-    hostName: 'Alex Chen',
-    description: 'Daily discussions about technology trends, product launches, and interviews with tech leaders.',
-    imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1120&q=80',
-    isLive: true,
-    tags: ['Technology', 'News', 'Interviews'],
-    episodes: new Array(18),
-    listenerCount: 156,
-    startTime: '1:02:45', // Duration of stream so far
-  },
-  {
-    id: 'live4',
-    title: 'World Music Journey',
-    hostName: 'DJ WorldWide',
-    description: 'Showcase of music traditions and contemporary sounds from across the globe.',
-    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: true,
-    tags: ['World Music', 'Cultural', 'Entertainment'],
-    episodes: new Array(29),
-    listenerCount: 124,
-    startTime: '0:32:18', // Duration of stream so far
-  },
-  {
-    id: 'live5',
-    title: 'Morning Motivation',
-    hostName: 'Sarah Johnson',
-    description: 'Start your day with inspiring stories, productivity tips, and interviews with successful entrepreneurs.',
-    imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-    isLive: true,
-    tags: ['Motivation', 'Self-improvement', 'Entrepreneurship'],
-    episodes: new Array(35),
-    listenerCount: 98,
-    startTime: '0:18:34', // Duration of stream so far
-  },
-];
-
-// Mock user data
 const mockUser = {
   id: 'user123',
   name: 'RadioFan',
 };
 
 export default function LivePage() {
-  const [selectedBroadcast, setSelectedBroadcast] = useState<any>(null);
+  const [selectedBroadcast, setSelectedBroadcast] = useState<RadioShow | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  
-  // Handle broadcast selection
-  const handleSelectBroadcast = (broadcast: any) => {
+  const [liveBroadcasts, setLiveBroadcasts] = useState<RadioShow[]>([]);
+
+  useEffect(() => {
+    mediaService.getLiveShows().then(setLiveBroadcasts);
+  }, []);
+
+  const handleSelectBroadcast = (broadcast: RadioShow) => {
     setSelectedBroadcast(broadcast);
   };
-  
-  // Handle play/pause
-  const handlePlayPause = (broadcast: any) => {
+
+  const handlePlayPause = (broadcast: RadioShow) => {
     if (selectedBroadcast && selectedBroadcast.id === broadcast.id) {
       setIsPlaying(!isPlaying);
     } else {
@@ -100,21 +31,21 @@ export default function LivePage() {
       setIsPlaying(true);
     }
   };
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-2">Live Now</h1>
       <p className="text-white/60 mb-8">Tune in to live broadcasts happening right now.</p>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Broadcasts list */}
         <div className="lg:col-span-2">
           <div className="grid grid-cols-1 gap-6">
             {liveBroadcasts.map(broadcast => (
-              <div 
+              <div
                 key={broadcast.id}
                 className={`
-                  rounded-xl overflow-hidden border 
+                  rounded-xl overflow-hidden border
                   ${selectedBroadcast?.id === broadcast.id ? 'border-primary' : 'border-white/10'}
                   transition-colors duration-300
                 `}
@@ -122,9 +53,9 @@ export default function LivePage() {
                 <div className="flex flex-col md:flex-row">
                   {/* Broadcast image */}
                   <div className="md:w-1/3 relative">
-                    <img 
-                      src={broadcast.imageUrl} 
-                      alt={broadcast.title} 
+                    <img
+                      src={broadcast.imageUrl}
+                      alt={broadcast.title}
                       className="w-full h-full object-cover aspect-video md:aspect-square"
                     />
                     <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded flex items-center">
@@ -132,7 +63,7 @@ export default function LivePage() {
                       LIVE
                     </div>
                   </div>
-                  
+
                   {/* Broadcast details */}
                   <div className="md:w-2/3 p-4 flex flex-col">
                     <div className="flex justify-between items-start">
@@ -140,26 +71,25 @@ export default function LivePage() {
                         <h2 className="text-xl font-bold">{broadcast.title}</h2>
                         <p className="text-white/60">Hosted by {broadcast.hostName}</p>
                       </div>
-                      
                       <div className="text-right">
                         <div className="text-xs text-white/60">On air for</div>
                         <div className="text-white font-medium">{broadcast.startTime}</div>
                       </div>
                     </div>
-                    
+
                     <p className="mt-2 text-white/80">{broadcast.description}</p>
-                    
+
                     <div className="flex flex-wrap gap-2 mt-3">
                       {broadcast.tags.map((tag, index) => (
-                        <span 
-                          key={index} 
+                        <span
+                          key={index}
                           className="text-xs bg-neutral-700/80 text-white px-2 py-0.5 rounded-full"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                    
+
                     <div className="mt-4 flex items-center justify-between">
                       <div className="flex items-center">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white/60 mr-1">
@@ -168,17 +98,17 @@ export default function LivePage() {
                         </svg>
                         <span className="text-white/60">{broadcast.listenerCount} listeners</span>
                       </div>
-                      
+
                       <div className="flex space-x-2">
-                        <Button 
+                        <Button
                           variant="outline"
                           size="sm"
                           onClick={() => handleSelectBroadcast(broadcast)}
                         >
                           Join Chat
                         </Button>
-                        
-                        <Button 
+
+                        <Button
                           variant={selectedBroadcast?.id === broadcast.id && isPlaying ? "danger" : "primary"}
                           size="sm"
                           onClick={() => handlePlayPause(broadcast)}
@@ -205,7 +135,7 @@ export default function LivePage() {
             ))}
           </div>
         </div>
-        
+
         {/* Chat window */}
         <div className="lg:col-span-1">
           <div className="sticky top-24">
@@ -215,7 +145,7 @@ export default function LivePage() {
                   <h2 className="font-semibold">Chat: {selectedBroadcast.title}</h2>
                 </div>
                 <div className="flex-grow">
-                  <ChatWindow 
+                  <ChatWindow
                     broadcastId={selectedBroadcast.id}
                     isHost={false}
                     userName={mockUser.name}
@@ -240,16 +170,15 @@ export default function LivePage() {
           </div>
         </div>
       </div>
-      
+
       {/* Upcoming broadcasts section */}
       <div className="mt-16">
         <h2 className="text-2xl font-bold mb-6">Coming Up Next</h2>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* Upcoming broadcast cards */}
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 15 minutes
               </div>
@@ -257,15 +186,13 @@ export default function LivePage() {
             <div className="p-4">
               <h3 className="font-semibold">Jazz Sessions</h3>
               <p className="text-white/60 text-sm">Hosted by Melody Murray</p>
-              <Button variant="outline" size="sm" className="w-full mt-3">
-                Set Reminder
-              </Button>
+              <Button variant="outline" size="sm" className="w-full mt-3">Set Reminder</Button>
             </div>
           </div>
-          
+
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1231&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-4.0.3&auto=format&fit=crop&w=1231&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 45 minutes
               </div>
@@ -273,15 +200,13 @@ export default function LivePage() {
             <div className="p-4">
               <h3 className="font-semibold">Hip Hop History</h3>
               <p className="text-white/60 text-sm">Hosted by DJ Classic</p>
-              <Button variant="outline" size="sm" className="w-full mt-3">
-                Set Reminder
-              </Button>
+              <Button variant="outline" size="sm" className="w-full mt-3">Set Reminder</Button>
             </div>
           </div>
-          
+
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 1 hour 20 minutes
               </div>
@@ -289,15 +214,13 @@ export default function LivePage() {
             <div className="p-4">
               <h3 className="font-semibold">Mind Matters</h3>
               <p className="text-white/60 text-sm">Hosted by Dr. Lisa Park</p>
-              <Button variant="outline" size="sm" className="w-full mt-3">
-                Set Reminder
-              </Button>
+              <Button variant="outline" size="sm" className="w-full mt-3">Set Reminder</Button>
             </div>
           </div>
-          
+
           <div className="bg-neutral-800/50 border border-white/10 rounded-lg overflow-hidden">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
+              <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1074&q=80" alt="Upcoming broadcast" className="w-full h-48 object-cover" />
               <div className="absolute bottom-2 left-2 bg-neutral-900/80 text-white text-xs px-2 py-1 rounded">
                 Starting in 2 hours 5 minutes
               </div>
@@ -305,23 +228,19 @@ export default function LivePage() {
             <div className="p-4">
               <h3 className="font-semibold">Startup Stories</h3>
               <p className="text-white/60 text-sm">Hosted by Entrepreneur Eric</p>
-              <Button variant="outline" size="sm" className="w-full mt-3">
-                Set Reminder
-              </Button>
+              <Button variant="outline" size="sm" className="w-full mt-3">Set Reminder</Button>
             </div>
           </div>
         </div>
       </div>
-      
+
       {/* Schedule section */}
       <div className="mt-16">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">Weekly Schedule</h2>
-          <Button variant="outline" size="sm" href="/schedule">
-            View Full Schedule
-          </Button>
+          <Button variant="outline" size="sm" href="/schedule">View Full Schedule</Button>
         </div>
-        
+
         <div className="overflow-hidden rounded-lg border border-white/10 bg-neutral-800/30">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-white/10">
@@ -338,95 +257,35 @@ export default function LivePage() {
               <tbody className="divide-y divide-white/10">
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">8:00 AM</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Morning Motivation</div>
-                    <div className="text-xs text-white/60">Sarah Johnson</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Morning Motivation</div>
-                    <div className="text-xs text-white/60">Sarah Johnson</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Morning Motivation</div>
-                    <div className="text-xs text-white/60">Sarah Johnson</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Morning Motivation</div>
-                    <div className="text-xs text-white/60">Sarah Johnson</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Morning Motivation</div>
-                    <div className="text-xs text-white/60">Sarah Johnson</div>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Morning Motivation</div><div className="text-xs text-white/60">Sarah Johnson</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Morning Motivation</div><div className="text-xs text-white/60">Sarah Johnson</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Morning Motivation</div><div className="text-xs text-white/60">Sarah Johnson</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Morning Motivation</div><div className="text-xs text-white/60">Sarah Johnson</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Morning Motivation</div><div className="text-xs text-white/60">Sarah Johnson</div></td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">10:00 AM</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Tech Talk Daily</div>
-                    <div className="text-xs text-white/60">Alex Chen</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Tech Talk Daily</div>
-                    <div className="text-xs text-white/60">Alex Chen</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Tech Talk Daily</div>
-                    <div className="text-xs text-white/60">Alex Chen</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Tech Talk Daily</div>
-                    <div className="text-xs text-white/60">Alex Chen</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Tech Talk Daily</div>
-                    <div className="text-xs text-white/60">Alex Chen</div>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Tech Talk Daily</div><div className="text-xs text-white/60">Alex Chen</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Tech Talk Daily</div><div className="text-xs text-white/60">Alex Chen</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Tech Talk Daily</div><div className="text-xs text-white/60">Alex Chen</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Tech Talk Daily</div><div className="text-xs text-white/60">Alex Chen</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Tech Talk Daily</div><div className="text-xs text-white/60">Alex Chen</div></td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">2:00 PM</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Indie Spotlight</div>
-                    <div className="text-xs text-white/60">Melody Finder</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Jazz Sessions</div>
-                    <div className="text-xs text-white/60">Melody Murray</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Hip Hop History</div>
-                    <div className="text-xs text-white/60">DJ Classic</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">World Music Journey</div>
-                    <div className="text-xs text-white/60">DJ WorldWide</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Indie Spotlight</div>
-                    <div className="text-xs text-white/60">Melody Finder</div>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Indie Spotlight</div><div className="text-xs text-white/60">Melody Finder</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Jazz Sessions</div><div className="text-xs text-white/60">Melody Murray</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Hip Hop History</div><div className="text-xs text-white/60">DJ Classic</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">World Music Journey</div><div className="text-xs text-white/60">DJ WorldWide</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Indie Spotlight</div><div className="text-xs text-white/60">Melody Finder</div></td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-white/60">8:00 PM</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Electronic Horizons</div>
-                    <div className="text-xs text-white/60">DJ Pulse</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">True Crime Stories</div>
-                    <div className="text-xs text-white/60">Mike Reynolds</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Mind Matters</div>
-                    <div className="text-xs text-white/60">Dr. Lisa Park</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Startup Stories</div>
-                    <div className="text-xs text-white/60">Entrepreneur Eric</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">Electronic Horizons</div>
-                    <div className="text-xs text-white/60">DJ Pulse</div>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Electronic Horizons</div><div className="text-xs text-white/60">DJ Pulse</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">True Crime Stories</div><div className="text-xs text-white/60">Mike Reynolds</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Mind Matters</div><div className="text-xs text-white/60">Dr. Lisa Park</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Startup Stories</div><div className="text-xs text-white/60">Entrepreneur Eric</div></td>
+                  <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium">Electronic Horizons</div><div className="text-xs text-white/60">DJ Pulse</div></td>
                 </tr>
               </tbody>
             </table>
