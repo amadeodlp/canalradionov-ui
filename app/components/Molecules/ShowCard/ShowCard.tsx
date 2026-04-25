@@ -160,7 +160,7 @@ export const ShowCard: React.FC<ShowCardProps> = ({
         `}>
           <PlayPauseButton
             isPlaying={isPlaying}
-            onClick={onPlayPause}
+            onClick={onPlayPause ?? (() => {})}
             size={size === 'sm' ? 'sm' : size === 'md' ? 'md' : 'lg'}
             variant="glass"
             pulseWhenPlaying={true}
