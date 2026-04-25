@@ -4,10 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@components/atoms/Button/Button';
+import { useAppSelector } from '@hooks';
 
 export const MainNavigation: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isLoggedIn = useAppSelector((state) => state.auth.isAuthenticated);
+  const username = useAppSelector((state) => state.auth.username);
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -31,11 +34,9 @@ export const MainNavigation: React.FC = () => {
     { label: 'Library', path: '/library' },
   ];
   
-  // Auth nav items
   const authNavItems = isLoggedIn 
     ? [
         { label: 'Dashboard', path: '/dashboard' },
-        { label: 'Profile', path: '/profile' },
       ]
     : [
         { label: 'Sign In', path: '/login' },
@@ -95,11 +96,10 @@ export const MainNavigation: React.FC = () => {
                     </Button>
                   </Link>
                   
-                  {/* User menu (simplified) */}
                   <div className="relative">
                     <Link href="/dashboard" className="flex items-center">
                       <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-white border border-white/20">
-                        DJ
+                        {username ? username.slice(0, 2).toUpperCase() : 'ME'}
                       </div>
                     </Link>
                   </div>
