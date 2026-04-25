@@ -32,9 +32,11 @@ Next.js (App Router), React, TypeScript, Redux Toolkit, Supabase, AWS Amplify, A
 - API calls via Axios to canalradionov-service backend
 - `use client` directive required for interactive components in App Router
 
-## Focus for this agent
+## Known incomplete areas
 
-- Broadcast creation/management flow — buttons/forms that don't submit
-- Live player — play/pause/volume controls that aren't wired
-- Library — content that loads as mock data instead of real API calls
-- Dashboard — stats or actions that are hardcoded or non-functional
+- `broadcast/page.tsx` — scheduled broadcasts section shows hardcoded mock data; past broadcasts "Download" buttons have no handler
+- `BroadcasterDashboard` — uses `useEffect` but `useEffect` is not imported; stats are hardcoded mock values
+- `AudioPlayer` — calls `mediaService.getEpisode` and `mediaService.incrementPlayCount` with signatures that don't match the actual `mediaService` implementation
+- `home/page.tsx` — calls `mediaService.getAllShows()` directly in the render body (not in a useEffect), causing infinite re-renders
+- `live/page.tsx` — `RadioShow` type does not have `startTime` or `listenerCount` fields, so those render as undefined
+- Navigation — "View Profile" buttons on discover page and avatar in nav link to `/profile` which has no route
