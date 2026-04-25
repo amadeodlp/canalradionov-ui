@@ -63,7 +63,7 @@ export const ConfirmationCodeForm: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-lg h-full w-96 gap-4">
-      <Logo src="/assets/flyer.webp" alt="Canal Radionov" />
+      <Logo />
       <h2 className="text-xl font-semibold mt-4">Verify your email</h2>
       <p className="text-gray-600 text-center">
         Enter the verification code we sent to {email}. If you didn&apos;t receive a code, check your spam folder.

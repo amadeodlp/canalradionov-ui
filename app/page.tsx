@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@components/atoms/Button/Button';
 import { ShowGrid } from '@components/organisms/ShowGrid/ShowGrid';
 import { mediaService, RadioShow } from '@api/services/mediaService';
@@ -11,54 +12,62 @@ const FEATURED_SHOWS: RadioShow[] = [
   {
     id: 'show1',
     title: 'Electronic Horizons',
-    hostName: 'DJ Pulse',
+    host_name: 'DJ Pulse',
     description: 'Explore the latest electronic music trends with weekly guests and exclusive premieres.',
-    imageUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: true,
+    image_url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80',
+    is_live: true,
+    scheduled_time: '',
+    end_time: '',
     tags: ['Electronic', 'Dance', 'House'],
-    episodes: new Array(12),
+    episodes: [],
   },
   {
     id: 'show2',
     title: 'Jazz Conversations',
-    hostName: 'Melody Murray',
+    host_name: 'Melody Murray',
     description: 'Deep dives into jazz classics and conversations with jazz musicians about their craft.',
-    imageUrl: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80',
-    isLive: false,
-    scheduledTime: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
+    image_url: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=80',
+    is_live: false,
+    scheduled_time: new Date(Date.now() + 86400000).toISOString(),
+    end_time: '',
     tags: ['Jazz', 'Interviews', 'Music History'],
-    episodes: new Array(24),
+    episodes: [],
   },
   {
     id: 'show3',
     title: 'Tech Unplugged',
-    hostName: 'Alex Chen',
+    host_name: 'Alex Chen',
     description: 'Weekly discussions about technology trends, product launches, and interviews with tech leaders.',
-    imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1120&q=80',
-    isLive: false,
+    image_url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1120&q=80',
+    is_live: false,
+    scheduled_time: '',
+    end_time: '',
     tags: ['Technology', 'Interviews', 'Reviews'],
-    episodes: new Array(18),
+    episodes: [],
   },
   {
     id: 'show4',
     title: 'Morning Motivation',
-    hostName: 'Sarah Johnson',
+    host_name: 'Sarah Johnson',
     description: 'Start your day with inspiring stories, productivity tips, and interviews with successful entrepreneurs.',
-    imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-    isLive: false,
-    scheduledTime: new Date(Date.now() + 43200000).toISOString(), // 12 hours from now
+    image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1171&q=80',
+    is_live: false,
+    scheduled_time: new Date(Date.now() + 43200000).toISOString(),
+    end_time: '',
     tags: ['Motivation', 'Self-improvement', 'Entrepreneurship'],
-    episodes: new Array(35),
+    episodes: [],
   },
   {
     id: 'show5',
     title: 'True Crime Stories',
-    hostName: 'Mike Reynolds',
+    host_name: 'Mike Reynolds',
     description: 'In-depth analysis of famous criminal cases with expert interviews and eyewitness accounts.',
-    imageUrl: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    isLive: false,
+    image_url: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80',
+    is_live: false,
+    scheduled_time: '',
+    end_time: '',
     tags: ['True Crime', 'Investigation', 'Documentary'],
-    episodes: new Array(42),
+    episodes: [],
   }
 ];
 
@@ -119,20 +128,12 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button 
-              variant="light" 
-              size="lg"
-              href="/broadcast"
-            >
-              Start Broadcasting
-            </Button>
-            <Button 
-              variant="outline-light" 
-              size="lg"
-              href="/discover"
-            >
-              Discover Shows
-            </Button>
+            <Link href="/broadcast">
+              <Button variant="light" size="lg">Start Broadcasting</Button>
+            </Link>
+            <Link href="/discover">
+              <Button variant="outline" size="lg">Discover Shows</Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -189,20 +190,12 @@ export default function Home() {
             </p>
             
             <div className="flex gap-4">
-              <Button 
-                variant="primary" 
-                size="md"
-                href="/signup"
-              >
-                Sign Up Free
-              </Button>
-              <Button 
-                variant="outline" 
-                size="md"
-                href="/about"
-              >
-                Learn More
-              </Button>
+              <Link href="/signup">
+                <Button variant="primary" size="md">Sign Up Free</Button>
+              </Link>
+              <Link href="/about">
+                <Button variant="outline" size="md">Learn More</Button>
+              </Link>
             </div>
           </div>
           

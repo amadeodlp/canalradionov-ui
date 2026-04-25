@@ -38,7 +38,7 @@ export const BroadcastStudio: React.FC<BroadcastStudioProps> = ({
   useEffect(() => {
     if (audioStream && !audioContext.current) {
       // Create audio context
-      audioContext.current = new (window.AudioContext || (window as unknown).webkitAudioContext)();
+      audioContext.current = new (window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext)();
       
       // Create analyser
       analyser.current = audioContext.current.createAnalyser();
@@ -257,7 +257,7 @@ export const BroadcastStudio: React.FC<BroadcastStudioProps> = ({
               <Button
                 variant="primary"
                 size="lg"
-                fullWidth
+                isFullWidth
                 onClick={startBroadcast}
                 leftIcon={
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

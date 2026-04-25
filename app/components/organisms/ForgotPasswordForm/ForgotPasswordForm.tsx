@@ -38,7 +38,7 @@ export const ForgotPasswordForm: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-lg h-full w-96 gap-4">
-      <Logo src="/assets/flyer.webp" alt="Canal Radionov" />
+      <Logo />
       <h2 className="text-xl font-semibold mt-4">Forgot Your Password?</h2>
       <p className="text-gray-600">
         Enter your email address and we will send you instructions to reset your
@@ -63,7 +63,7 @@ export const ForgotPasswordForm: React.FC = () => {
           </div>
         )}
       </div>
-      <Button variant="blue" onClick={handleSubmit}>
+      <Button variant="primary" onClick={handleSubmit}>
         {isSubmitting ? <Spinner color="white" /> :
         "Continue"
         }

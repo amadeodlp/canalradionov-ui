@@ -77,12 +77,29 @@ class MediaService {
     return data || [];
   }
 
+  async getEpisode(showId: string, episodeId: string): Promise<Episode | null> {
+    const { data } = await supabase
+      .from('episodes')
+      .select('*')
+      .eq('id', episodeId)
+      .eq('show_id', showId)
+      .single();
+    return data;
+  }
+
   async incrementPlayCount(episodeId: string): Promise<void> {
     try {
-      await supabase
+      const { data: episode } = await supabase
         .from('episodes')
-        .update({ play_count: supabase.rpc as unknown })
-        .eq('id', episodeId);
+        .select('play_count')
+        .eq('id', episodeId)
+        .single();
+      if (episode) {
+        await supabase
+          .from('episodes')
+          .update({ play_count: (episode.play_count || 0) + 1 })
+          .eq('id', episodeId);
+      }
     } catch (error) {
       console.error('Error incrementing play count:', error);
     }

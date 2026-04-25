@@ -1,9 +1,8 @@
 import { Button } from '@components/atoms/Button/Button'
 import { Dropdown } from '@components/atoms/Dropdown/Dropdown'
-import Input from '@components/atoms/Input/Input'
+import { Input } from '@components/atoms/Input/Input'
 import {
   autoformatPhoneNumber,
-  formatUSPhoneNumberTo164,
 } from '@utils/formattedPhone'
 import Label from '@components/atoms/Label/Label'
 import { Logo } from '@components/atoms/Logo/Logo'
@@ -94,19 +93,9 @@ const SignUpForm: React.FC = () => {
     setIsSubmitting(true)
     try {
       const payload = {
-        username: formData.email,
+        email: formData.email,
         password: formData.password,
-        options: {
-          userAttributes: {
-            email: formData.email,
-            given_name: formData.firstName,
-            family_name: formData.lastName,
-            phone_number: formatUSPhoneNumberTo164(formData.phoneNumber),
-            'custom:userType': formData.userType,
-            'custom:account': formData.account,
-            zoneinfo: formData.timezone,
-          },
-        },
+        username: formData.email,
       }
       await dispatch(signup(payload));
       router.push(`/login?justCreated=true`)
@@ -136,7 +125,7 @@ const SignUpForm: React.FC = () => {
   return (
     <div className="bg-white p-8 mx-auto rounded-lg shadow-lg">
       <div className="flex justify-center mb-4">
-        <Logo src="/assets/canalradionovlogo.png" />
+        <Logo />
       </div>
       <p className="text-center text-gray-600 mb-6">
         Hi there, we just need some more details to complete your signup process
@@ -281,7 +270,7 @@ const SignUpForm: React.FC = () => {
 
         <Button
           onClick={handleSubmit}
-          variant="green"
+          variant="success"
           disabled={isSubmitting}
         >
           {isSubmitting ? <Spinner /> : 'Complete Sign Up'}

@@ -23,10 +23,10 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   showId,
   episodeId,
   streamUrl,
-  showTitle = 'Canal Radionov',
-  hostName = 'Live Host',
-  showImage = "/assets/default-show.jpg",
-  isLive = false,
+  showTitle: initialShowTitle = 'Canal Radionov',
+  hostName: initialHostName = 'Live Host',
+  showImage: initialShowImage = "/assets/default-show.jpg",
+  isLive: initialIsLive = false,
   autoPlay = false,
   className = '',
 }) => {
@@ -39,6 +39,15 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVolumeVisible, setIsVolumeVisible] = useState(false);
   const [audioSrc, setAudioSrc] = useState(streamUrl || '');
+  const [showTitle, setShowTitle] = useState(initialShowTitle);
+  const [hostName, setHostName] = useState(initialHostName);
+  const [showImage, setShowImage] = useState(initialShowImage);
+  const [isLive, setIsLive] = useState(initialIsLive);
+const [toastState, setToastState] = useState<{ open: boolean; variant: 'success' | 'error'; message: string }>({
+    open: false,
+    variant: 'error',
+    message: '',
+  });
   
   // Refs
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -54,28 +63,30 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
           if (episodeId && showId) {
             // Load specific episode
             const episode = await mediaService.getEpisode(showId, episodeId);
-            setAudioSrc(episode.audioUrl);
-            setShowTitle(episode.title);
-            if (episode.imageUrl) {
-              setShowImage(episode.imageUrl);
+            if (episode) {
+              setAudioSrc(episode.audio_url);
+              setShowTitle(episode.title);
+              if (episode.image_url) {
+                setShowImage(episode.image_url);
+              }
+              setIsLive(false);
             }
-            setIsLive(false);
           } else if (showId) {
             // Load show (assumes it's for streaming live content)
             const show = await mediaService.getShowById(showId);
-            if (show.isLive) {
+            if (show && show.is_live) {
               // For a live show, we would have a streaming URL
               // This would be specific to your streaming setup
               setAudioSrc(`https://streaming.canalradionov.com/live/${show.id}`);
               setShowTitle(show.title);
-              setHostName(show.hostName);
-              setShowImage(show.imageUrl);
+              setHostName(show.host_name);
+              setShowImage(show.image_url);
               setIsLive(true);
-            } else {
+            } else if (show) {
               // If not live but has episodes, play the latest episode
               if (show.episodes && show.episodes.length > 0) {
                 const latestEpisode = show.episodes[0]; // Assuming episodes are sorted newest first
-                setAudioSrc(latestEpisode.audioUrl);
+                setAudioSrc(latestEpisode.audio_url);
                 setShowTitle(`${show.title} - ${latestEpisode.title}`);
                 setIsLive(false);
               } else {
@@ -119,17 +130,14 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     
     const handlePlay = () => {
       setIsPlaying(true);
-      setShowAnimation(true);
     };
-    
+
     const handlePause = () => {
       setIsPlaying(false);
-      setShowAnimation(false);
     };
-    
+
     const handleEnded = () => {
       setIsPlaying(false);
-      setShowAnimation(false);
       setCurrentTime(0);
       
       // For live streams, try to reconnect
@@ -163,7 +171,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     if (showId && episodeId && !isLive) {
       audio.addEventListener('play', async () => {
         try {
-          await mediaService.incrementPlayCount(showId, episodeId);
+          await mediaService.incrementPlayCount(episodeId);
         } catch (error) {
           console.error('Failed to increment play count:', error);
         }

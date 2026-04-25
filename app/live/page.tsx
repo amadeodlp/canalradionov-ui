@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@components/atoms/Button/Button';
 import { ChatWindow } from '@components/organisms/ChatWindow/ChatWindow';
 import { mediaService, RadioShow } from '@api/services/mediaService';
@@ -55,7 +56,7 @@ export default function LivePage() {
                   {/* Broadcast image */}
                   <div className="md:w-1/3 relative">
                     <Image
-                      src={broadcast.imageUrl}
+                      src={broadcast.image_url}
                       alt={broadcast.title}
                       width={400}
                       height={400}
@@ -72,11 +73,11 @@ export default function LivePage() {
                     <div className="flex justify-between items-start">
                       <div>
                         <h2 className="text-xl font-bold">{broadcast.title}</h2>
-                        <p className="text-white/60">Hosted by {broadcast.hostName}</p>
+                        <p className="text-white/60">Hosted by {broadcast.host_name}</p>
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-white/60">On air for</div>
-                        <div className="text-white font-medium">{broadcast.startTime}</div>
+                        <div className="text-white font-medium">{broadcast.scheduled_time}</div>
                       </div>
                     </div>
 
@@ -99,7 +100,7 @@ export default function LivePage() {
                           <path d="M18 8C18 4.68629 15.3137 2 12 2C8.68629 2 6 4.68629 6 8C6 11.3137 8.68629 14 12 14C15.3137 14 18 11.3137 18 8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           <path d="M2.50002 22C3.52083 19.3696 5.23961 17.111 7.43544 15.5185C9.63128 13.9261 12.2296 13.0655 14.9017 13.0655C17.5737 13.0655 20.1721 13.9261 22.3679 15.5185C24.5637 17.111 26.2825 19.3696 27.3033 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
-                        <span className="text-white/60">{broadcast.listenerCount} listeners</span>
+                        <span className="text-white/60">0 listeners</span>
                       </div>
 
                       <div className="flex space-x-2">
@@ -241,7 +242,7 @@ export default function LivePage() {
       <div className="mt-16">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">Weekly Schedule</h2>
-          <Button variant="outline" size="sm" href="/schedule">View Full Schedule</Button>
+          <Link href="/schedule"><Button variant="outline" size="sm">View Full Schedule</Button></Link>
         </div>
 
         <div className="overflow-hidden rounded-lg border border-white/10 bg-neutral-800/30">

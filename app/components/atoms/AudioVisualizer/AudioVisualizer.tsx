@@ -74,7 +74,7 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     
     const setupAnalyzer = () => {
       try {
-        context = new (window.AudioContext || (window as unknown).webkitAudioContext)();
+        context = new (window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext)();
         source = context.createMediaElementSource(audioRef.current!);
         newAnalyser = context.createAnalyser();
         

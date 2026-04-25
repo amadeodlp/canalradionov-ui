@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@components/atoms/Button/Button';
 import BroadcastStudio from '@components/organisms/BroadcastStudio/BroadcastStudio';
 import ChatWindow from '@components/organisms/ChatWindow/ChatWindow';

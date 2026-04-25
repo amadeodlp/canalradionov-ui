@@ -73,7 +73,7 @@ export const LoginForm: React.FC = () => {
       <Spinner />
       ) : (
         <>
-      <Logo src="/assets/flyer.webp" alt="Canal Radionov" />
+      <Logo />
       <h2 className="text-xl font-semibold mt-4">Welcome</h2>
       <p className="text-gray-600">Log in to continue to Canal Radionov.</p>
 
@@ -112,7 +112,7 @@ export const LoginForm: React.FC = () => {
           Forgot password?
         </a>
       </div>
-      <Button onClick={handleSubmit} variant="green">
+      <Button onClick={handleSubmit} variant="success">
         Continue
       </Button>
       <div className="flex justify-center items-center gap-1">
