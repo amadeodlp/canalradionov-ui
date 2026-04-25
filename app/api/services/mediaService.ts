@@ -78,11 +78,14 @@ class MediaService {
   }
 
   async incrementPlayCount(episodeId: string): Promise<void> {
-    await supabase
-      .from('episodes')
-      .update({ play_count: supabase.rpc as unknown })
-      .eq('id', episodeId)
-      .catch(() => {});
+    try {
+      await supabase
+        .from('episodes')
+        .update({ play_count: supabase.rpc as unknown })
+        .eq('id', episodeId);
+    } catch (error) {
+      console.error('Error incrementing play count:', error);
+    }
   }
 }
 
