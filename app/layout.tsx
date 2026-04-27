@@ -16,6 +16,7 @@ export default function RootLayout({
       <head>
         <title>Wavecaster</title>
         <meta name="description" content="Where anyone can become an internet radio broadcaster" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </head>
       <body className="min-h-screen bg-neutral-900 text-neutral-50">
         <ReduxProvider>
